@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcServer.Protos";
+
+package orders;
+
+// Order management service demonstrating all four gRPC call types.
+service OrderService {
+  // Unary: fetch a single order by id.
+  rpc GetOrder (GetOrderRequest) returns (Order);
+
+  // Server streaming: stream orders, optionally filtered by status.
+  rpc ListOrders (ListOrdersRequest) returns (stream Order);
+
+  // Unary: place a new order.
+  rpc PlaceOrder (PlaceOrderRequest) returns (Order);
+
+  // Bidirectional streaming: send tracking requests, receive live updates.
+  rpc TrackOrders (stream TrackRequest) returns (stream TrackingUpdate);
+}
+
+message GetOrderRequest {
+  int32 id = 1;
+}
+
+message ListOrdersRequest {
+  // Optional filter, e.g. "Pending". Empty means no filter.
+  string status_filter = 1;
+}
+
+message PlaceOrderRequest {
+  string product_name = 1;
+  int32 quantity = 2;
+  double unit_price = 3;
+}
+
+message Order {
+  int32 id = 1;
+  string product_name = 2;
+  int32 quantity = 3;
+  string status = 4;
+  double total = 5;
+}
+
+message TrackRequest {
+  int32 order_id = 1;
+}
+
+message TrackingUpdate {
+  int32 order_id = 1;
+  string status = 2;
+  string message = 3;
+}

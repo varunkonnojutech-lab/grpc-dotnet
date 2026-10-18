@@ -1,0 +1,1 @@
+{"customizations":{"vscode":{"extensions":["ms-dotnettools.csharp"]}},"image":"mcr.microsoft.com/devcontainers/dotnet:1-8-bookworm","name":"grpc-dotnet","postCreateCommand":"dotnet restore src/GrpcServer && dotnet restore src/GrpcClient"}
